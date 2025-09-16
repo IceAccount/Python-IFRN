@@ -16,5 +16,4 @@ num2 = 2
 
 Soma = num1 + num2
 
-print("Aqui sua soma!")
 print(Soma)
