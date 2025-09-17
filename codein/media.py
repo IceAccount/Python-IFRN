@@ -7,6 +7,6 @@
 a = 0
 b = 0
 c = 0
-
 #end_inputs
 
+print((a + b + c)/3)
