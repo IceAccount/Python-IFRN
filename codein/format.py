@@ -4,10 +4,12 @@
 
 
 #begin_inputs
-x = 4
-a = 6
+a = 1
 b = 2
-y = 8
+x = a
+y = b
+c = 3
+z = 4
 # defina as variáveis aqui
 
 
@@ -15,3 +17,7 @@ y = 8
 
 
 #os prints vão a partir daqui
+print(f"{x} e {y} sao {a} e {b}")
+print("Total:",x + y)
+print(a, b, c, "sao numeros inteiros")
+print(z,"+ 0 =", z)
