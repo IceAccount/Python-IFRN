@@ -11,4 +11,4 @@ valor_compra = 100
 
 print((valor_compra) - (valor_compra * 9/100))
 print((valor_compra)/5)
-print((valor_compra * 1.17/10))
+print(round((valor_compra * 1.17)/ 10, 2))
