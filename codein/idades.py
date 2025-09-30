@@ -5,11 +5,13 @@
 
 #begin_inputs
 #mantenha esse trecho. o input será manipulado aqui.
-maior = 0
-idade = [34, 90, 4, 56, 12, 78, 54, 13, 24, 9]
 #end_inputs
-for i in idade:
-    if i >= 18:
+
+maior = 0
+
+for i in range(10):
+    idade = input()
+    if idade >= 18:
         maior += 1
 
 print(maior)
