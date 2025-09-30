@@ -9,6 +9,8 @@
 # NÃO mexa aqui.
 
 #end_inputs
-
 for i in range(99, 250):
-    print(i , "bugs no software,pegue um deles e conserte...\nTecle “Ctrl+F5”\nVamos fazer mais um café!")
+    print(i, "bugs no software, pegue um deles e conserte...")
+    print('Tente Ctrl+F5')
+    if i == 251:
+        print("Vamos tomar mais um café!")
