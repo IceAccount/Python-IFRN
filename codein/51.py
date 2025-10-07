@@ -4,12 +4,12 @@
 
 
 #begin_inputs
-pesos = (45, 88, 67, 102, 80, 95, 66) 
+
 #end_inputs
-limite = 500
-elevator = 0
-pesomax = sum(pesos) + elevator
-if pesomax > limite:
-    print("peso excedido")
-#o codigo ta com o resultado certo mas a formatacao nao devia ta assim.
-#e eu nao sei como que devia ser
+peso_total = 0
+while True:
+    p = input()
+    if peso_total + p >= 500:
+        print('Peso excedido')
+        break
+    peso_total += p
