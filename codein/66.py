@@ -7,24 +7,28 @@ numero_min = 1
 numero_max = 1000000
 numero_secreto = random.randint(numero_min, numero_max)
 LIMITE_DE_TENTATIVAS = 50
-tentativas = 1
-tentativa = int(input("Fale um numero entre 1 e 1 milhão: "))
+tentativas = 0
 
-while tentativa != numero_secreto: 
+
+tentativa = int(input("Fale um numero entre 1 e 1 milhao: "))
+
+while tentativa != numero_secreto:
+
     if tentativa > numero_secreto:
-        print("O numero que voce escolheu é MAIOR que o numero secreto, tente de novo")
-    elif tentativa < numero_secreto:
-        print("O numero que voce escolheu é MENOR que o numero secreto, tente de novo")
+        print("O numero que voce escolheu e MAIOR que o numero secreto, tente de novo")
+    else:
+        print("O numero que voce escolheu e MENOR que o numero secreto, tente de novo") 
 
-    print(f"Você ainda tem {LIMITE_DE_TENTATIVAS} tentativas restantes")  
-    LIMITE_DE_TENTATIVAS -= 1
-    tentativa = int(input("Fale um numero entre 1 e 100: "))
     tentativas += 1
+    restante = LIMITE_DE_TENTATIVAS - tentativas
 
     if tentativas > LIMITE_DE_TENTATIVAS:
-         print("Você execeu o número máximo de tentativas, você perdeu.")
+         print("Voce execeu o numero máximo de tentativas, você perdeu.")
          exit()
-print(f"Voce acertou o numero era {numero_secreto} e você conseguiu em {tentativas} tentativas")
 
+    print(f"Voce ainda tem {restante} tentativas restantes.")
 
+    tentativa = int(input("Fale um numero entre 1 e 1 milhao: "))
 
+if tentativa == numero_secreto:
+    print(f"Voce acertou o numero era {numero_secreto} e você conseguiu em {tentativas} tentativas e sobrou {restante} tentativas")

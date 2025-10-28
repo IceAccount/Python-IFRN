@@ -2,26 +2,26 @@
 # @sid 20251174010022
 # @aid V6.4
 
+# Jogo de Craps
+
 #begin_inputs
-print("Fale um numero entre 2 e 12")
-dados_primeira = int(input(""))
 #end_inputs
+dados_primeira = int(input(""))
 if dados_primeira in (7, 11):
-	print("Você Ganhou!")
+    print("Voce ganhou!")
 elif dados_primeira in (2, 3, 12):
-    print("Você Perdeu!")
+    print("Voce perdeu!")
 else:
     ponto = dados_primeira
-    print(f"Seu ponto é {ponto}")
-    
     while True:
-        print("Digite a segunda jogada de dados: ")
-        nova_jogada = int(input())
-        if nova_jogada == ponto:
-            print("Você Ganhou!")
+        try:
+            jogada = int(input(""))
+        except:
             break
-        elif nova_jogada == 7:
-            print("Você Perdeu!")
-            exit()
-        else:
-            print("Tente novamente")
+
+        if jogada == ponto:
+            print("Voce ganhou!")
+            break
+        elif jogada == 7:
+            print("Voce perdeu!")
+            break
