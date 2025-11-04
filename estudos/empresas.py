@@ -1,4 +1,4 @@
-nomearchive = "../Python-IFRN/estudos/empresas"
+nomearchive = "../Python-IFRN/estudos/Phasmophobia"
 f = open(nomearchive)
 
 for t in f.readlines():
