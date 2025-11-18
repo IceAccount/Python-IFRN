@@ -5,7 +5,7 @@
 
 #begin_inputs
 letras = []
-palavra = "revenant"
+palavra = "Thaye"
 #end_inputs 
 chances = 4
 
