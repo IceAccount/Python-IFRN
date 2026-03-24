@@ -5,16 +5,16 @@ class ContaCorrente:
         self.saldo = saldo
     def depositar(self):
         self.depositar = int(input("depositar:"))
-        self.saldoatual = self.saldo + self.depositar
-        print (self.saldoatual)
+        self.saldo = self.saldo + self.depositar
+        print (self.saldo)
     def sacar(self):
         self.sacar = int(input("sacar:"))
-        self.saldoatual2 = self.saldoatual - self.sacar
-        print (self.saldoatual)
+        self.saldo = self.saldo - self.sacar
+        print (self.saldo)
     def mostrar_dados(self):
         print(self.nome)
         print(self.cpf)
-        print(self.saldoatual)
+        print(self.saldo)
 
 Leticia = ContaCorrente("Leticia", 1232452465, 10)
 Leticia.depositar()
