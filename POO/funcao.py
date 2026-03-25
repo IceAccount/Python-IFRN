@@ -2,6 +2,13 @@ class fantasma:
     def __init__(self, tipo, morte):
         self.tipo = tipo
         self.morte = morte
+    def __str__(self):
+        return f"""
+        ----------
+        sou um {self.tipo}
+        e eu morri {self.morte}
+        ----------
+        """
     def assustar(self):
         print("Boo!!👻")
 
@@ -11,7 +18,4 @@ Jason = fantasma("Revenant", "Afogado")
 
 Lauany = fantasma("Oni", "Se cedeu a roblox")
 
-print(Lauany.tipo)
-print(Lauany.morte)
-
-Sadako.assustar()
+print(Sadako)
