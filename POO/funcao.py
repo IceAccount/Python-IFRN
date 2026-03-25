@@ -7,9 +7,9 @@ class fantasma:
 
 Sadako = fantasma("Onryo", "Jogada em poço")
 
-Jason = fantasma("Revenant", "afogado")
+Jason = fantasma("Revenant", "Afogado")
 
-Lauany = fantasma("Oni", "tesoura demais")
+Lauany = fantasma("Oni", "Se cedeu a roblox")
 
 print(Lauany.tipo)
 print(Lauany.morte)
