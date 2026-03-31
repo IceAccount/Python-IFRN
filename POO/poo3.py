@@ -1,16 +1,25 @@
 class estudande:
-    def __init__(self,id,nome,creditos):
-        self._id = id
+    def __init__(self, id, nome, creditos):
+        self.id = id
         self.nome = nome
-        self.creditos = creditos
+        self.__creditos = creditos
+
     def detalhar(self):
-        print(self._id)
+        print(self.id)
         print(self.nome)
-        print(self.creditos)
-    def id(self):
-        self.id = int(input("Coloque o id! "))
-        while self.id:
-            if self.id == 0
+        print(self.__creditos)
+
+    def adicionar_creditos(self):
+        while True:
+            creditonovo = int(input("Coloque os creditos! "))
+            if creditonovo == 0:
                 print("tente novamente!")
-                id()
-                          
+            else:
+                self.__creditos += creditonovo
+                break
+lucca = estudande(0,"Lucca")
+lucca.adicionar_creditos()
+lucca.detalhar()
+isaac = estudande(1,"isaac")
+isaac.adicionar_creditos()
+isaac.detalhar()

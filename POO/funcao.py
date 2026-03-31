@@ -12,6 +12,8 @@ class fantasma:
     def assustar(self):
         print("Boo!!👻")
 
+
+
 Sadako = fantasma("Onryo", "Jogada em poço")
 
 Jason = fantasma("Revenant", "Afogado")
