@@ -1,8 +1,8 @@
 class estudande:
-    def __init__(self, id, nome, creditos):
+    def __init__(self, id, nome):
         self.id = id
         self.nome = nome
-        self.__creditos = creditos
+        self.__creditos = 1
 
     def detalhar(self):
         print(self.id)
