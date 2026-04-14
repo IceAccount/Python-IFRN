@@ -14,4 +14,3 @@ class cabinete(computador):
         self.processador = processador
         self.memoria = memoria
         self.cabinete = cabinete
-        
