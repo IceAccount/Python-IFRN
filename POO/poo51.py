@@ -2,15 +2,18 @@ class computador:
     def __init__(self, processador, memoria):
         self.processador = processador
         self.memoria = memoria
+    def componentes(self):
+        print(self.processador)
+        print(self.memoria)
 class laptop(computador):
-    def __init__(self, processador, memoria, bateria):
+    def __init__(self, processador, memoria):
         super().__init__(processador, memoria)
         self.processador = processador
         self.memoria = memoria
-        self.bateria = bateria
-class cabinete(computador):
-    def __init__(self, processador, memoria, cabinete):
+        self.bateria = 0
+class desktop(computador):
+    def __init__(self, processador, memoria):
         super().__init__(processador, memoria)
         self.processador = processador
         self.memoria = memoria
-        self.cabinete = cabinete
+        self.cabinete = ""
