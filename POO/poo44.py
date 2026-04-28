@@ -5,16 +5,20 @@ class Jogador:
     Nome: str
     Posição: str
 
-@dataclass
 class time:
-    Nome: str
-    Lista: Jogador
+    def __init__(self,nome):
+        self.Nome = nome
+        self.jogadores = []
+    def adicionarjogadores(self, Jogador):
+        self.jogadores.append(Jogador)
     def listar_jogadores(self):
-        print(f"Todos os jogadores que estão no time:{self.Lista.Nome}")
-
-
+         for jogador in self.jogadores:
+            print(f"Jogador é {jogador.Nome} jogando no {jogador.Posição}")
 
 Jogador1 = Jogador("Carlos", "Costa quadrada")
-time1 = time("Vasco", Jogador1)
+jogador2 = Jogador("Verlos", "Costa verde")
+time1 = time("Vasco")
+time1.adicionarjogadores(Jogador1)
+time1.adicionarjogadores(jogador2)
 
 time1.listar_jogadores()
