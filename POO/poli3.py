@@ -1,0 +1,15 @@
+class Animal:
+    def emitir_som(self):
+        return "Um Som Desconhecido"
+class Cachorro(Animal):
+    def emitir_som(self):
+        return "Au Auuuuuuuu"
+class Gato(Animal):
+    def emitir_som(self):
+        return "Miau :3"
+
+animais =[Animal(),Cachorro(),Gato(),Animal(),Cachorro(),Gato()]
+print("Zoo")
+
+for animal in animais:
+    print(f"{animal.__class__.__name__}: {animal.emitir_som()}")
