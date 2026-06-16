@@ -2,16 +2,28 @@ import tkinter as tk
 from tkinter import messagebox, simpledialog
 
 class ContaBancaria:
+    numeros_contas = []
     def __init__(self, t, n, s):
         self.__titular = t
         self.__numero = n
         self.__saldo = s
+
+        ContaBancaria.numeros_contas.append(n)
     def get_titular(self):
         return self.__titular
+    
     def get_numero(self):
         return self.__numero
+    
     def get_saldo(self):
         return self.__saldo
+    
+    @classmethod
+    def existe_conta_duplicada(cls):
+        return len(cls.numeros_contas) != len(set(cls.numeros_contas))
+    @classmethod
+    def contasduplicadas(cls):
+         return list(dict.fromkeys(cls.numeros_contas))
 
 class BancoApp:
     def __init__(self, janela):
@@ -20,11 +32,16 @@ class BancoApp:
         self.janela.geometry("850x400")
 
         self.contas = [
-            ContaBancaria("João", 1001, 500),
-            ContaBancaria("Maria", 1002, 1000),
-            ContaBancaria("Pedro", 1003, 300),
-            ContaBancaria("Esther", 1004, 20)
+            ContaBancaria("Phasmophobia", 1001, 0),
+            ContaBancaria("Mario", 1001, 0),
+            ContaBancaria("Estava", 1003, 0),
+            ContaBancaria("Esther", 1004, 0),
         ]
+
+        if(self.contas[0].existe_conta_duplicada()):
+            messagebox.showerror("Erro","Existe conta duplicada")
+            messagebox.showinfo("contas",self.contas[0].contasduplicadas())
+            exit()
 
         self.criar_interface()
 
@@ -171,4 +188,4 @@ class BancoApp:
 
 janela = tk.Tk()
 app = BancoApp(janela)
-janela.mainloop()
+janela.mainloop() 
