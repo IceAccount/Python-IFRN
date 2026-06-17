@@ -18,6 +18,21 @@ class ContaBancaria:
     def get_saldo(self):
         return self.__saldo
     
+    def exibir_dados(self):
+        return f"{self.__titular}\n{self.__numero}\n{self.__saldo}"
+    
+    def depositar(self, value):
+        if value <= 0:
+            return False
+        self.__saldo += value
+        return True
+
+    def sacar(self, value):
+        if value <= 0:
+            return False
+        self.__saldo -= value
+        return True
+       
     @classmethod
     def existe_conta_duplicada(cls):
         return len(cls.numeros_contas) != len(set(cls.numeros_contas))
@@ -32,10 +47,10 @@ class BancoApp:
         self.janela.geometry("850x400")
 
         self.contas = [
-            ContaBancaria("Phasmophobia", 1001, 0),
-            ContaBancaria("Mario", 1001, 0),
-            ContaBancaria("Estava", 1003, 0),
-            ContaBancaria("Esther", 1004, 0),
+            ContaBancaria("Phasmophobia", 1001, 100),
+            ContaBancaria("Mario", 1002, 400),
+            ContaBancaria("Estava", 1003, 1000000000),
+            ContaBancaria("Esther", 1004, 300),
         ]
 
         if(self.contas[0].existe_conta_duplicada()):
@@ -98,7 +113,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.depositar(c)
             )
-            btn_depositar.config(state="disabled")
+            #btn_depositar.config(state="disabled")
             btn_depositar.pack(pady=2)
 
             btn_sacar = tk.Button(
@@ -107,7 +122,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.sacar(c)
             )
-            btn_sacar.config(state="disabled")
+            #btn_sacar.config(state="disabled")
             btn_sacar.pack(pady=2)
 
             btn_transferir = tk.Button(
@@ -125,7 +140,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.exibir_dados(c)
             )
-            btn_dados.config(state="disabled")
+            #btn_dados.config(state="disabled")
             btn_dados.pack(pady=2)
 
     def depositar(self, conta):
