@@ -1,6 +1,34 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
 
+class Endereco:
+    def __init__(self, r, n, b, c):
+        self.__rua = r
+        self.__numero = n
+        self.__bairro = b
+        self.__cidade = c
+
+class Cliente:
+    def __init__(self, n, c):
+        self.__nome = n
+        self.__cpf = c
+        self.__endereco = Endereco
+        self.__contas = []
+
+    def get_nome(self):
+        return self.__nome
+    
+    def get_cpf(self):
+        return self.__cpf
+    
+    def get_endereco(self):
+        return self.__endereco
+    
+    def exibir_dados(self):
+        return f"{self.__nome}\n{self.__cpf}\n{self.__endereco}"
+    def adicionar_conta(self):
+        pass
+
 class ContaBancaria:
     numeros_contas = []
     def __init__(self, t, n, s):
