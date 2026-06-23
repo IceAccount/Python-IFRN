@@ -32,7 +32,14 @@ class ContaBancaria:
             return False
         self.__saldo -= value
         return True
-       
+    def transferir(self, valor, conta_destino):
+        if valor > 0:
+            self.__saldo -= valor
+            conta_destino.depositar(valor)
+            return True
+        else:
+            return False       
+
     @classmethod
     def existe_conta_duplicada(cls):
         return len(cls.numeros_contas) != len(set(cls.numeros_contas))
@@ -131,7 +138,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.transferir(c)
             )
-            btn_transferir.config(state="disabled")
+            #btn_transferir.config(state="disabled")
             btn_transferir.pack(pady=2)
 
             btn_dados = tk.Button(
