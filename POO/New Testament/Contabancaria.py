@@ -10,13 +10,13 @@ class Endereco:
 
 class Cliente:
     def __init__(self, n, c):
-        self.__nome = n
+        self.nome = n
         self.__cpf = c
         self.__endereco = Endereco
         self.__contas = []
 
     def get_nome(self):
-        return self.__nome
+        return self.nome
     
     def get_cpf(self):
         return self.__cpf
@@ -38,7 +38,7 @@ class ContaBancaria:
 
         ContaBancaria.numeros_contas.append(n)
     def get_titular(self):
-        return self.__titular
+        return self.__titular.get_nome()
     
     def get_numero(self):
         return self.__numero
@@ -47,7 +47,7 @@ class ContaBancaria:
         return self.__saldo
     
     def exibir_dados(self):
-        return f"{self.__titular}\n{self.__numero}\n{self.__saldo}"
+        return f"Nome:{self.__titular.get_nome()}\nCPF:{self.__titular.get_cpf()}\nConta:{self.__numero}\nSaldo:{self.__saldo}"
     
     def depositar(self, value):
         if value <= 0:
@@ -81,11 +81,16 @@ class BancoApp:
         self.janela.title("Sistema Bancário - POO em Python")
         self.janela.geometry("850x400")
 
+        cliente1 = Cliente("Phasmophobia", 1992020)
+        cliente2 = Cliente("Douglas", 120330)
+        cliente3 = Cliente("Fabonas", 19238)
+        cliente4 = Cliente("borhas", 128390)
+
         self.contas = [
-            ContaBancaria("Phasmophobia", 1001, 100),
-            ContaBancaria("Mario", 1002, 400),
-            ContaBancaria("Estava", 1003, 1000000000),
-            ContaBancaria("Esther", 1004, 300),
+            ContaBancaria(cliente1, 1001, 100),
+            ContaBancaria(cliente2, 1002, 400),
+            ContaBancaria(cliente3, 1003, 1000000000),
+            ContaBancaria(cliente4, 1004, 300),
         ]
 
         if(self.contas[0].existe_conta_duplicada()):
