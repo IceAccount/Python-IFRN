@@ -63,7 +63,7 @@ class ContaBancaria:
     def get_saldo(self):
         return self.__saldo
     
-def exibir_dados(self):
+    def exibir_dados(self):
         return f'CONTA:\nTitular: {self.__titular.get_nome()}\nNumero da conta: {self.__numero}\nSaldo: R$ {self.__saldo}\nCpf: {self.__titular.get_cpf()} \n\nENDEREÇO:\n{self.__titular.get_endereco().exibir_dados()}
     
     def depositar(self, value):
@@ -104,10 +104,10 @@ class BancoApp:
         self.janela.title("Sistema Bancário - POO em Python")
         self.janela.geometry("850x400")
 
-        cliente1 = Cliente("Phasmophobia", 1992020)
-        cliente2 = Cliente("Douglas", 120330)
-        cliente3 = Cliente("Fabonas", 19238)
-        cliente4 = Cliente("borhas", 128390)
+        cliente1 = Cliente("Phasmophobia", 1992020, Endereço("A1", "978", "centro", "Ceara-mirim"))
+        cliente2 = Cliente("Douglas", 120330, Endereço("A2", "654", "centro", "Ceara-mirim"))
+        cliente3 = Cliente("Fabonas", 19238, Endereço("A3", "432", "centro", "Ceara-mirim"))
+        cliente4 = Cliente("borhas", 128390, Endereço("Petersburgo", "756", "Poccya", "Moscow"))
 
         self.contas = [
             ContaBancaria(cliente1, 1001, 100),
