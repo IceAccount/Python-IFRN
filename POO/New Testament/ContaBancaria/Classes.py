@@ -100,3 +100,18 @@ class ContaCorrente(ContaBancaria):
         super().__init__(titular, numero, saldo)
         self.__limite = limite
         self.__tarifa_mental = tarifa_mensal
+    def exibir_dados(self):
+        return f"{self.__titular}\n{self.__numero}\n{self.__saldo}\n{self.__limite}\n{self.__tarifa_mental}"
+    def sacar(self, value: float):
+        super.sacar(self.__limite)
+        if value <= 0:
+            return False
+        self.__saldo -= value
+        return True
+    
+class contapoupança(ContaBancaria):
+    def __init__(self, titular, numero, saldo, taxa_rendimento):
+        super().__init__(titular, numero, saldo)
+        self.__taxa_rendimento = taxa_rendimento
+    def exibir_dados(self):
+        return f"{self.__titular}\n{self.__numero}\n{self.__saldo}\n{self.__taxa_rendimento}"
