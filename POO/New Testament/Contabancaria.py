@@ -1,33 +1,50 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
 
-class Endereco:
-    def __init__(self, r, n, b, c):
-        self.__rua = r
-        self.__numero = n
-        self.__bairro = b
-        self.__cidade = c
+class Endereço:
+    def __init__(self, rua, numero, bairro, cidade):
+        self.__rua = rua
+        self.__numero = int(numero)
+        self.__bairro = bairro
+        self.__cidade = cidade
+    
+    def get_rua(self):
+        return self.__rua
+    
+    def get_numero(self):
+        return self.__numero
+
+    def get_bairro(self):
+        return self.__bairro
+    
+    def get_cidade(self):
+        return self.__cidade
+
+    def exibir_dados(self):
+        return f'Rua: {self.__rua}, numero: {self.__numero}; \nBairro: {self.__bairro} \nCidade {self.__cidade}'
+
 
 class Cliente:
-    def __init__(self, n, c):
-        self.nome = n
-        self.__cpf = c
-        self.__endereco = Endereco
+    def __init__(self, nome, cpf, endereço):
+        self.__nome = nome
+        self.__cpf = cpf
+        self.__endereço = endereço
         self.__contas = []
-
+    
     def get_nome(self):
-        return self.nome
+        return self.__nome
     
     def get_cpf(self):
         return self.__cpf
     
     def get_endereco(self):
-        return self.__endereco
+        return self.__endereço
+    
+    def adicionar_conta(self, cnt):
+        self.__contas.append(cnt)
     
     def exibir_dados(self):
-        return f"{self.__nome}\n{self.__cpf}\n{self.__endereco}"
-    def adicionar_conta(self):
-        pass
+        return f'Nome: {self.__nome} \nCPF: {self.__cpf} \nEndereço: {self.__endereço}'
 
 class ContaBancaria:
     numeros_contas = []
@@ -46,13 +63,13 @@ class ContaBancaria:
     def get_saldo(self):
         return self.__saldo
     
-    def exibir_dados(self):
-        return f"Nome:{self.__titular.get_nome()}\nCPF:{self.__titular.get_cpf()}\nConta:{self.__numero}\nSaldo:{self.__saldo}"
+def exibir_dados(self):
+        return f'CONTA:\nTitular: {self.__titular.get_nome()}\nNumero da conta: {self.__numero}\nSaldo: R$ {self.__saldo}\nCpf: {self.__titular.get_cpf()} \n\nENDEREÇO:\n{self.__titular.get_endereco().exibir_dados()}
     
     def depositar(self, value):
         if value <= 0:
             return False
-        self.__saldo += value
+        self.__saldo += value                                            
         return True
 
     def sacar(self, value):
@@ -67,13 +84,19 @@ class ContaBancaria:
             return True
         else:
             return False       
-
     @classmethod
-    def existe_conta_duplicada(cls):
+    def contas_duplicadas(cls):
+        repetidos = set()
+        n_repetidos = []
+        for x in cls.numeros_contas:
+            if ContaBancaria.numeros_contas.count(x) > 1:
+                repetidos.add(x)
+            else:
+                n_repetidos.append(x)
+        return f'{repetidos}'
+    @classmethod
+    def verificar_conta_duplicada(cls):
         return len(cls.numeros_contas) != len(set(cls.numeros_contas))
-    @classmethod
-    def contasduplicadas(cls):
-         return list(dict.fromkeys(cls.numeros_contas))
 
 class BancoApp:
     def __init__(self, janela):
