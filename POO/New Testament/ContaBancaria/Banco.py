@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
-from Classes import Cliente, ContaBancaria
+from Classes import Cliente, ContaBancaria, Endereço, ContaCorrente
 
 class BancoApp:
     def __init__(self, janela):
@@ -8,14 +8,15 @@ class BancoApp:
         self.janela.title("Sistema Bancário - POO em Python")
         self.janela.geometry("850x400")
 
-        cliente1  = Cliente("Ana", "004.045")
-        cliente2 = Cliente("Arthur", "023.450")        
+        endereço1 = Endereço("Enfermaria", 3, "Esquerda superior", "Skeld")
+        endereço2 = Endereço("Laboratório", 4, "Direita superior", "Polus outpost")
+        
+        cliente1  = Cliente("Ciano", "004.045", endereço1)
+        cliente2 = Cliente("Lima", "023.450", endereço2)        
 
         self.contas = [
-            ContaBancaria("João", 1001, 500),
-            ContaBancaria("Maria", 1002, 1000),
-            ContaBancaria("Pedro", 1003, 300),
-            ContaBancaria("Esther", 1004, 20)
+            ContaBancaria(cliente1, 1001, 500),
+            ContaBancaria(cliente2, 1002, 1000)
         ]
 
         # messagebox.showinfo("Sucesso", "Depósito realizado.")
@@ -111,7 +112,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.render_juros(c)
             )
-            btn_rendimento.config(state="disabled")
+           # btn_rendimento.config(state="disabled")
             btn_rendimento.pack(pady=2)
 
             btn_taxa = tk.Button(
@@ -120,7 +121,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.cobrar_taxa(c)
             )
-            btn_taxa.config(state="disabled")
+            #btn_taxa.config(state="disabled")
             btn_taxa.pack(pady=2)
 
     def depositar(self, conta):
