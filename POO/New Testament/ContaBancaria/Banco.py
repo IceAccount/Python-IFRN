@@ -1,13 +1,12 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
-from Classes import Cliente, ContaBancaria, Endereço, ContaCorrente
+from Classes import Cliente, ContaBancaria, Endereço, ContaCorrente, ContaPoupanca, ContaSalario
 
 class BancoApp:
     def __init__(self, janela):
         self.janela = janela
         self.janela.title("Sistema Bancário - POO em Python")
         self.janela.geometry("850x400")
-        self.janela.configure(background="#88E788")
 
         endereço1 = Endereço("Enfermaria", 3, "Esquerda superior", "Skeld")
         endereço2 = Endereço("Laboratório", 4, "Direita superior", "Polus outpost")
@@ -16,8 +15,8 @@ class BancoApp:
         cliente2 = Cliente("Lima", "023.450", endereço2)        
 
         self.contas = [
-            ContaCorrente(cliente1, 1001, 500, 100, 10),
-            ContaBancaria(cliente2, 1002, 1000)
+            ContaCorrente(cliente1, 1001, 500, 1000, 100),
+            ContaPoupanca(cliente2, 1002, 1000, 0.1)
         ]
 
         # messagebox.showinfo("Sucesso", "Depósito realizado.")
@@ -29,7 +28,6 @@ class BancoApp:
             self.janela,
             text="Banco Python - Contas Bancárias",
             font=("Arial", 18, "bold"),
-            background="#88E788"
         )
         titulo.pack(pady=15)
 
@@ -61,9 +59,19 @@ class BancoApp:
 
             lbl_numero = tk.Label(
                 frame,
-                text=f"Conta: {conta.get_numero()}"
+                text=f"Conta: {conta.get_numero()}",
+                font=("Arial", 14, "bold")
             )
             lbl_numero.pack()
+
+            lbl_tipo = tk.Label(
+                frame,
+                text=f"Conta: {conta.get_tipo_conta()}",
+                font=("Arial", 14, "bold"),
+            background="#88E788"
+            )
+            lbl_tipo.pack()
+
 
             lbl_saldo = tk.Label(
                 frame,
@@ -125,6 +133,56 @@ class BancoApp:
             )
             #btn_taxa.config(state="disabled")
             btn_taxa.pack(pady=2)
+
+    def criar_conta(self):
+        janela_cadastro = tk.Toplevel(self.janela)
+        janela_cadastro.title("Criar nova conta")
+        janela_cadastro.geometry("300x250")
+        janela_cadastro.resizable(False, False)
+
+        tk.Label(janela_cadastro, text="Titular:").pack(pady=5)
+        entrada_titular = tk.Entry(janela_cadastro)
+        entrada_titular.pack()
+
+        tk.Label(janela_cadastro, text="Número da conta:").pack(pady=5)
+        entrada_numero = tk.Entry(janela_cadastro)
+        entrada_numero.pack()
+
+        tk.Label(janela_cadastro, text="Saldo inicial:").pack(pady=5)
+        entrada_saldo = tk.Entry(janela_cadastro)
+        entrada_saldo.pack()
+
+        def salvar_conta():
+            titular = entrada_titular.get()
+            numero = entrada_numero.get()
+            saldo = entrada_saldo.get()
+
+            if titular == "" or numero == "" or saldo == "":
+                messagebox.showerror("Erro", "Preencha todos os campos.")
+                return
+
+            try:
+                numero = int(numero)
+                saldo = float(saldo)
+            except ValueError:
+                messagebox.showerror("Erro", "Número da conta e saldo devem ser valores numéricos.")
+                return
+
+            nova_conta = ContaBancaria(titular, numero, saldo)
+            self.contas.append(nova_conta)
+
+            messagebox.showinfo("Sucesso", "Conta criada com sucesso.")
+
+            janela_cadastro.destroy()
+            self.atualizar_tela()
+
+        btn_salvar = tk.Button(
+            janela_cadastro,
+            text="Salvar conta",
+            width=15,
+            command=salvar_conta
+        )
+        btn_salvar.pack(pady=15)
 
     def depositar(self, conta):
         valor = simpledialog.askfloat("Depósito", "Digite o valor do depósito:")
