@@ -7,6 +7,7 @@ class BancoApp:
         self.janela = janela
         self.janela.title("Sistema Bancário - POO em Python")
         self.janela.geometry("850x400")
+        self.janela.configure(background="#88E788")
 
         endereço1 = Endereço("Enfermaria", 3, "Esquerda superior", "Skeld")
         endereço2 = Endereço("Laboratório", 4, "Direita superior", "Polus outpost")
@@ -15,7 +16,7 @@ class BancoApp:
         cliente2 = Cliente("Lima", "023.450", endereço2)        
 
         self.contas = [
-            ContaBancaria(cliente1, 1001, 500),
+            ContaCorrente(cliente1, 1001, 500, 100, 10),
             ContaBancaria(cliente2, 1002, 1000)
         ]
 
@@ -27,7 +28,8 @@ class BancoApp:
         titulo = tk.Label(
             self.janela,
             text="Banco Python - Contas Bancárias",
-            font=("Arial", 18, "bold")
+            font=("Arial", 18, "bold"),
+            background="#88E788"
         )
         titulo.pack(pady=15)
 
