@@ -107,6 +107,7 @@ class ContaCorrente(ContaBancaria):
             return True
         else:
             return False
+            
     def cobrar_taxa(self):
         self.sacar(self.__tarifa_mensal)
     def get_tipo_conta(self):
