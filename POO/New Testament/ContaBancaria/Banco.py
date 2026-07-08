@@ -31,6 +31,15 @@ class BancoApp:
         )
         titulo.pack(pady=15)
 
+        btn_criar = tk.Button(
+            janela,
+            text="Criar conta",
+            width=15,
+            command=lambda: self.criar_conta()
+        )
+         # btn_depositar.config(state="disabled")
+        btn_criar.pack(pady=2)
+
         self.frame_contas = tk.Frame(self.janela)
         self.frame_contas.pack()
 
@@ -137,12 +146,16 @@ class BancoApp:
     def criar_conta(self):
         janela_cadastro = tk.Toplevel(self.janela)
         janela_cadastro.title("Criar nova conta")
-        janela_cadastro.geometry("300x250")
+        janela_cadastro.geometry("300x490")
         janela_cadastro.resizable(False, False)
 
         tk.Label(janela_cadastro, text="Titular:").pack(pady=5)
         entrada_titular = tk.Entry(janela_cadastro)
         entrada_titular.pack()
+
+        tk.Label(janela_cadastro, text="CPF:").pack(pady=5)
+        entrada_cpf = tk.Entry(janela_cadastro)
+        entrada_cpf.pack()
 
         tk.Label(janela_cadastro, text="Número da conta:").pack(pady=5)
         entrada_numero = tk.Entry(janela_cadastro)
@@ -152,23 +165,47 @@ class BancoApp:
         entrada_saldo = tk.Entry(janela_cadastro)
         entrada_saldo.pack()
 
+        tk.Label(janela_cadastro, text="Rua:").pack(pady=5)
+        entrada_rua = tk.Entry(janela_cadastro)
+        entrada_rua.pack()
+
+        tk.Label(janela_cadastro, text="Número da residência:").pack(pady=5)
+        entrada_numero_rua = tk.Entry(janela_cadastro)
+        entrada_numero_rua.pack()
+
+        tk.Label(janela_cadastro, text="Bairro:").pack(pady=5)
+        entrada_bairro = tk.Entry(janela_cadastro)
+        entrada_bairro.pack()
+
+        tk.Label(janela_cadastro, text="Cidade:").pack(pady=5)
+        entrada_cidade = tk.Entry(janela_cadastro)
+        entrada_cidade.pack()
+
         def salvar_conta():
             titular = entrada_titular.get()
+            cpf = entrada_cpf.get()
             numero = entrada_numero.get()
             saldo = entrada_saldo.get()
+            rua = entrada_rua.get()
+            numero_residencia = entrada_numero_rua.get()
+            bairro = entrada_bairro.get()
+            cidade = entrada_cidade.get()
 
-            if titular == "" or numero == "" or saldo == "":
+            if titular == "" or numero == "" or saldo == "" or rua == "" or numero_residencia == "" or cpf == "" or bairro == "" or cidade == "":
                 messagebox.showerror("Erro", "Preencha todos os campos.")
                 return
 
             try:
                 numero = int(numero)
                 saldo = float(saldo)
+                numero_residencia = int(numero_residencia)
+                cpf = float(cpf)
             except ValueError:
-                messagebox.showerror("Erro", "Número da conta e saldo devem ser valores numéricos.")
+                messagebox.showerror("Erro", "Cpf, número da conta, saldo e número de residência devem ser valores numéricos.")
                 return
 
-            nova_conta = ContaBancaria(titular, numero, saldo)
+            cliente = Cliente(titular, cpf, Endereço(rua, numero_residencia, bairro, cidade))
+            nova_conta = ContaBancaria(cliente, numero, saldo)
             self.contas.append(nova_conta)
 
             messagebox.showinfo("Sucesso", "Conta criada com sucesso.")
@@ -183,7 +220,6 @@ class BancoApp:
             command=salvar_conta
         )
         btn_salvar.pack(pady=15)
-
     def depositar(self, conta):
         valor = simpledialog.askfloat("Depósito", "Digite o valor do depósito:")
 

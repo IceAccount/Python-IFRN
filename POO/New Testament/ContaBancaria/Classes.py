@@ -126,12 +126,13 @@ class ContaPoupanca(ContaBancaria):
         return None
     def exibir_dados(self):
          return f"{super().exibir_dados()}\nTaxa:{self.__taxa_rendimento}"
-
+    
 class ContaSalario(ContaBancaria):
-    def __init__(self, cliente, numero, saldo,limite,tarifa_mensal):
+    def __init__(self, cliente, numero, saldo,empresa,saques_realizados,limite_saques):
         super().__init__(cliente, numero, saldo)
-        self.__limite = limite
-        self.__tarifa_mensal = tarifa_mensal
+        self.__empresa = empresa
+        self.__saques_realizados = saques_realizados
+        self.__limite_saques = limite_saques
 
     def get_tipo_conta(self):
         return "Conta Salário"
