@@ -6,7 +6,7 @@ class BancoApp:
     def __init__(self, janela):
         self.janela = janela
         self.janela.title("Sistema Bancário - POO em Python")
-        self.janela.geometry("850x400")
+        self.janela.geometry("1080x700")
 
         endereço1 = Endereço("Enfermaria", 3, "Esquerda superior", "Skeld")
         endereço2 = Endereço("Laboratório", 4, "Direita superior", "Polus outpost")
@@ -30,6 +30,15 @@ class BancoApp:
             font=("Arial", 18, "bold"),
         )
         titulo.pack(pady=15)
+
+        btn_criar = tk.Button(
+            janela,
+            text="Pesquisar clientes",
+            width=15,
+            command=lambda: self.get_cliente()
+        )
+         # btn_depositar.config(state="disabled")
+        btn_criar.pack(pady=2)
 
         btn_criar = tk.Button(
             janela,
@@ -77,7 +86,6 @@ class BancoApp:
                 frame,
                 text=f"Conta: {conta.get_tipo_conta()}",
                 font=("Arial", 14, "bold"),
-            background="#88E788"
             )
             lbl_tipo.pack()
 
@@ -291,6 +299,7 @@ class BancoApp:
             messagebox.showerror("Sucesso", "Rendimento efetuado.")
         else:
             messagebox.showerror("Erro", "Cobrança invalida para essa conta")
+        self.atualizar_tela()
 
 
 
