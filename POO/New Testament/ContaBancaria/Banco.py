@@ -10,13 +10,14 @@ class BancoApp:
 
         endereço1 = Endereço("Enfermaria", 3, "Esquerda superior", "Skeld")
         endereço2 = Endereço("Laboratório", 4, "Direita superior", "Polus outpost")
+        endereço3 = Endereço("дорога","436", "Красноярск", "элита")
         
         cliente1  = Cliente("Ciano", "004.045", endereço1)
         cliente2 = Cliente("Lima", "023.450", endereço2)        
 
         self.contas = [
             ContaCorrente(cliente1, 1001, 500, 1000, 100),
-            ContaPoupanca(cliente2, 1002, 1000, 0.1)
+            ContaPoupanca(cliente2, 1002, 1000, 0.1),
         ]
 
         # messagebox.showinfo("Sucesso", "Depósito realizado.")
