@@ -44,7 +44,7 @@ class Cliente:
         return f'Nome: {self.__nome} \nCPF: {self.__cpf} \nEndereço: {self.__endereço}'
     
     def possui_contas(self):
-         return len(self.__contas) > 0
+        return len(self.__contas) > 0
 
 class ContaBancaria:
     numeros_contas = []
