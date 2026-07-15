@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox, simpledialog
 from Classes import Cliente, ContaBancaria, Endereço, ContaCorrente, ContaPoupanca, ContaSalario
 
+
 class BancoApp:
     def __init__(self, janela):
         self.janela = janela
@@ -11,8 +12,9 @@ class BancoApp:
         endereço1 = Endereço("Enfermaria", 3, "Esquerda superior", "Skeld")
         endereço2 = Endereço("Laboratório", 4, "Direita superior", "Polus outpost")
         
-        cliente1  = Cliente("Ciano", "004.045", endereço1)
-        cliente2 = Cliente("Lima", "023.450", endereço2)        
+        cliente1 = Cliente("Ciano", "004.045", endereço1)
+        cliente2 = Cliente("Lima", "023.450", endereço2)     
+        print(cliente1.possui_contas())
 
         self.contas = [
             ContaCorrente(cliente1, 1001, 500, 1000, 100),
@@ -154,7 +156,7 @@ class BancoApp:
     def criar_conta(self):
         janela_cadastro = tk.Toplevel(self.janela)
         janela_cadastro.title("Criar nova conta")
-        janela_cadastro.geometry("300x490")
+        janela_cadastro.geometry("300x510")
         janela_cadastro.resizable(False, False)
 
         tk.Label(janela_cadastro, text="Titular:").pack(pady=5)
@@ -189,6 +191,10 @@ class BancoApp:
         entrada_cidade = tk.Entry(janela_cadastro)
         entrada_cidade.pack()
 
+        tk.Label(janela_cadastro, text="Tipo da conta:").pack(pady=5)
+        entrada_tipo_da_conta = tk.Entry(janela_cadastro)
+        entrada_tipo_da_conta.pack()
+
         def salvar_conta():
             titular = entrada_titular.get()
             cpf = entrada_cpf.get()
@@ -198,8 +204,10 @@ class BancoApp:
             numero_residencia = entrada_numero_rua.get()
             bairro = entrada_bairro.get()
             cidade = entrada_cidade.get()
+            tipo_conta = entrada_tipo_da_conta.get()
 
-            if titular == "" or numero == "" or saldo == "" or rua == "" or numero_residencia == "" or cpf == "" or bairro == "" or cidade == "":
+
+            if titular == "" or numero == "" or saldo == "" or rua == "" or numero_residencia == "" or cpf == "" or bairro == "" or cidade == "" or tipo_conta == "":
                 messagebox.showerror("Erro", "Preencha todos os campos.")
                 return
 
@@ -212,9 +220,44 @@ class BancoApp:
                 messagebox.showerror("Erro", "Cpf, número da conta, saldo e número de residência devem ser valores numéricos.")
                 return
 
+
             cliente = Cliente(titular, cpf, Endereço(rua, numero_residencia, bairro, cidade))
-            nova_conta = ContaBancaria(cliente, numero, saldo)
-            self.contas.append(nova_conta)
+
+            if tipo_conta == "Bancaria":
+                nova_conta = ContaBancaria(cliente, numero, saldo)
+                self.contas.append(nova_conta)
+            elif tipo_conta == "Corrente":
+                janela_cadastro = tk.Toplevel(self.janela)
+                janela_cadastro.title("Criar nova conta")
+                janela_cadastro.geometry("300x510")
+                janela_cadastro.resizable(False, False)
+
+                tk.Label(janela_cadastro, text="Limite:").pack(pady=5)
+                entrada_limite = tk.Entry(janela_cadastro)
+                entrada_limite.pack()
+
+                tk.Label(janela_cadastro, text="Tarifa Mensal:").pack(pady=5)
+                entrada_tarifa = tk.Entry(janela_cadastro)
+                entrada_tarifa.pack()
+
+                limite = entrada_limite.get()
+                tarifa = entrada_tarifa.get()
+
+                if limite == "" or tarifa == "":
+                    messagebox.showerror("Erro", "Preencha todos os campos.")
+                    return
+
+                try:
+                    limite = float(limite)
+                    tarifa = float(tarifa)
+                except ValueError:
+                    messagebox.showerror("Erro", "Limite e fatura devem ser valores numéricos.")
+                    return
+                
+                nova_conta = ContaCorrente(cliente, numero, saldo, limite, tarifa)
+                self.contas.append(nova_conta)
+
+
 
             messagebox.showinfo("Sucesso", "Conta criada com sucesso.")
 
@@ -300,8 +343,6 @@ class BancoApp:
         else:
             messagebox.showerror("Erro", "Cobrança invalida para essa conta")
         self.atualizar_tela()
-
-
 
 janela = tk.Tk()
 app = BancoApp(janela)

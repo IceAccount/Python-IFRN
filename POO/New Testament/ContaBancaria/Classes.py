@@ -42,6 +42,9 @@ class Cliente:
     
     def exibir_dados(self):
         return f'Nome: {self.__nome} \nCPF: {self.__cpf} \nEndereço: {self.__endereço}'
+    
+    def possui_contas(self):
+         return len(self.__contas) > 0
 
 class ContaBancaria:
     numeros_contas = []
@@ -50,7 +53,8 @@ class ContaBancaria:
         self.__numero = numero
         self.__saldo = saldo
 
-        ContaBancaria.numeros_contas.append(ContaBancaria)
+        titular.adicionar_conta(self)
+        ContaBancaria.numeros_contas.append(numero)
 
     def get_titular(self):
         return self.__titular.get_nome()
