@@ -27,8 +27,6 @@ class BancoApp:
         self.criar_interface()
         # messagebox.showinfo("Sucesso", "Depósito realizado.")
 
-        self.criar_interface()
-
     def criar_interface(self):
         titulo = tk.Label(
             self.janela,
