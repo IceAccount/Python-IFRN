@@ -342,11 +342,8 @@ class BancoApp:
 
             messagebox.showinfo("Sucesso", "Conta criada com sucesso.")
             self.atualizar_tela()
-
-        
-
-        
-
+            janela_cadastro.destroy()
+            
         btn_salvar = tk.Button(
             janela_cadastro,
             text="Salvar conta",
