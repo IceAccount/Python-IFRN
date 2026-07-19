@@ -45,6 +45,19 @@ class Cliente:
     
     def possui_contas(self):
         return len(self.__contas) > 0
+        
+    def buscar_conta(self,numero):
+        for n in self.__contas:
+            if n.get_numero() == numero:
+                return f"{n.get_cliente().get_nome()} tem a conta {n.get_numero()}"
+        return None
+        
+    def consultar_saldo_total(self):
+        saldo_total = 0 
+        for n in self.__contas:
+            saldo_total += n.get_saldo()
+        return saldo_total
+    
 
 class ContaBancaria:
     numeros_contas = []
