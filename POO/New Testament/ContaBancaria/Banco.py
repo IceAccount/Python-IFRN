@@ -126,6 +126,14 @@ class BancoApp:
             # btn_dados.config(state="disabled")
             btn_dados.pack(pady=2)
 
+            btn_contas = tk.Button(
+                frame,
+                text="Contas do Cliente",
+                width=15,
+                command=lambda c=conta: self.contas_cliente(c)
+            )
+            btn_contas.pack(pady=2)
+
             btn_rendimento = tk.Button(
                 frame,
                 text="Render Juros",
