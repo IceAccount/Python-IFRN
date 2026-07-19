@@ -61,57 +61,60 @@ class Cliente:
 
 class ContaBancaria:
     numeros_contas = []
-    def __init__(self, titular, numero, saldo):
-        self.__titular = titular
-        self.__numero = numero
+    contas_duplicada = []
+    def __init__(self,cliente,numero,saldo):
+        self.__cliente = cliente 
+        self.__numero =  numero
         self.__saldo = saldo
-
-        titular.adicionar_conta(self)
-        ContaBancaria.numeros_contas.append(numero)
-
-    def get_titular(self):
-        return self.__titular.get_nome()
+        ContaBancaria.numeros_contas.append(self.__numero)
+    @classmethod
+    def existe_conta_duplicada(cls):
+        return len(cls.numeros_contas) != len(set(cls.numeros_contas))
+    @classmethod
+    def contas_duplicadas(cls):
+        vistos = set()
+        for numero in cls.numeros_contas:
+            if numero in vistos:
+                cls.contas_duplicada.append(numero)
+            else:
+                vistos.add(numero)
+        return cls.contas_duplicada
+    def get_cliente(self):
+        return self.__cliente
     
     def get_numero(self):
         return self.__numero
-    
+
     def get_saldo(self):
         return self.__saldo
+    def set_saldo(self,valor):
+        self.__saldo = valor 
+        
     
-    def exibir_dados(self):
-        return f"CONTA:\nTitular: {self.__titular.get_nome()}\nNumero da conta: {self.__numero}\nSaldo: R$ {self.__saldo}\nCpf: {self.__titular.get_cpf()} \n\nENDEREÇO:\n{self.__titular.get_endereco().exibir_dados()}"
-    
-    def depositar(self, value):
-        if value <= 0:
-            return False
-        self.__saldo += value                                            
+    def get_tipo_conta(self):
+        return "Conta Bancária"
+    def depositar(self,valor):
+        self.__saldo += valor
         return True
-
-    def sacar(self, value):
-        if value <= 0:
-            return False
-        self.__saldo -= value
-        return True
-    def transferir(self, valor, conta_destino):
-        if valor > 0:
+    def sacar(self,valor):
+        if self.__saldo >= valor:
             self.__saldo -= valor
-            conta_destino.depositar(valor)
             return True
         else:
-            return False       
-    @classmethod
-    def contas_duplicadas(cls):
-        repetidos = set()
-        n_repetidos = []
-        for x in cls.numeros_contas:
-            if ContaBancaria.numeros_contas.count(x) > 1:
-                repetidos.add(x)
+            return False
+    def transferir(self,valor,destino):
+            if self.sacar(valor):
+                destino.depositar(valor)
+                return True
             else:
-                n_repetidos.append(x)
-        return f'{repetidos}'
-    @classmethod
-    def verificar_conta_duplicada(cls):
-        return len(cls.numeros_contas) != len(set(cls.numeros_contas))
+                return False
+
+
+    def exibir_dados(self):
+        return (f"{self.__cliente.exibir_dados()}\n"
+                f"=== CONTA ===\n"
+                f"Número: {self.get_numero()}\n"
+                f"Saldo: {self.get_saldo():.2f}R$")
     
 class ContaCorrente(ContaBancaria):
     def __init__(self, cliente, numero, saldo,limite,tarifa_mensal):
