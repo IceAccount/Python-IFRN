@@ -14,14 +14,17 @@ class BancoApp:
         endereço3 = Endereço("дорога","436", "Красноярск", "элита")
         
         cliente1 = Cliente("Ciano", "004.045", endereço1)
-        cliente2 = Cliente("Lima", "023.450", endereço2)     
-        print(cliente1.possui_contas())
+        cliente2 = Cliente("Lima", "023.450", endereço2)
 
         self.contas = [
             ContaCorrente(cliente1, 1001, 500, 1000, 100),
             ContaPoupanca(cliente2, 1002, 1000, 0.1),
         ]
-
+        if(self.contas[0].existe_conta_duplicada()):
+            messagebox.showerror("Erro","Existe Conta Duplicada")
+            messagebox.showinfo("Contas",self.contas[0].contas_duplicadas())
+            exit()
+        self.criar_interface()
         # messagebox.showinfo("Sucesso", "Depósito realizado.")
 
         self.criar_interface()
@@ -34,24 +37,14 @@ class BancoApp:
         )
         titulo.pack(pady=15)
 
-        btn_criar = tk.Button(
-            janela,
-            text="Pesquisar clientes",
+        btn_criar_conta = tk.Button(
+            self.janela,
+            text="Criar Conta",
             width=15,
-            command=lambda: self.get_cliente()
-        )
-         # btn_depositar.config(state="disabled")
-        btn_criar.pack(pady=2)
-
-        btn_criar = tk.Button(
-            janela,
-            text="Criar conta",
-            width=15,
-            command=lambda: self.criar_conta()
-        )
-         # btn_depositar.config(state="disabled")
-        btn_criar.pack(pady=2)
-
+            command=lambda :self.criar_conta()
+                )
+                # btn_sacar.config(state="active")
+        btn_criar_conta.pack(pady=2)
         self.frame_contas = tk.Frame(self.janela)
         self.frame_contas.pack()
 
@@ -222,48 +215,208 @@ class BancoApp:
                 return
 
 
-            cliente = Cliente(titular, cpf, Endereço(rua, numero_residencia, bairro, cidade))
+def contas_cliente(self, conta):
+        cliente = conta.get_cliente()
 
-            if tipo_conta == "Bancaria":
-                nova_conta = ContaBancaria(cliente, numero, saldo)
-                self.contas.append(nova_conta)
-            elif tipo_conta == "Corrente":
-                janela_cadastro = tk.Toplevel(self.janela)
-                janela_cadastro.title("Criar nova conta")
-                janela_cadastro.geometry("300x510")
-                janela_cadastro.resizable(False, False)
+        texto = ""
 
-                tk.Label(janela_cadastro, text="Limite:").pack(pady=5)
-                entrada_limite = tk.Entry(janela_cadastro)
-                entrada_limite.pack()
+        for conta in self.contas:
+            if conta.get_cliente().get_cpf() == cliente.get_cpf():
+                texto += (
+                    f"{conta.get_tipo_conta()} - "
+                    f"Conta {conta.get_numero()} - "
+                    f"Saldo: R${conta.get_saldo():.2f}\n"
+                )
 
-                tk.Label(janela_cadastro, text="Tarifa Mensal:").pack(pady=5)
-                entrada_tarifa = tk.Entry(janela_cadastro)
-                entrada_tarifa.pack()
+        messagebox.showinfo("Contas do Cliente", texto)
 
-                limite = entrada_limite.get()
-                tarifa = entrada_tarifa.get()
+    def criar_conta(self):
+        janela_cadastro = tk.Toplevel(self.janela)
+        janela_cadastro.title("Criar Nova Conta")
+        janela_cadastro.geometry("450x650")
 
-                if limite == "" or tarifa == "":
-                    messagebox.showerror("Erro", "Preencha todos os campos.")
-                    return
+        tk.Label(janela_cadastro, text="Titular:").pack()
+        entrada_titular = tk.Entry(janela_cadastro)
+        entrada_titular.pack()
 
-                try:
-                    limite = float(limite)
-                    tarifa = float(tarifa)
-                except ValueError:
-                    messagebox.showerror("Erro", "Limite e fatura devem ser valores numéricos.")
-                    return
-                
-                nova_conta = ContaCorrente(cliente, numero, saldo, limite, tarifa)
-                self.contas.append(nova_conta)
+        tk.Label(janela_cadastro, text="CPF:").pack()
+        entrada_cpf = tk.Entry(janela_cadastro)
+        entrada_cpf.pack()
 
+        tk.Label(janela_cadastro, text="Rua:").pack()
+        entrada_rua = tk.Entry(janela_cadastro)
+        entrada_rua.pack()
 
+        tk.Label(janela_cadastro, text="Número:").pack()
+        entrada_numero_casa = tk.Entry(janela_cadastro)
+        entrada_numero_casa.pack()
+
+        tk.Label(janela_cadastro, text="Bairro:").pack()
+        entrada_bairro = tk.Entry(janela_cadastro)
+        entrada_bairro.pack()
+
+        tk.Label(janela_cadastro, text="Cidade:").pack()
+        entrada_cidade = tk.Entry(janela_cadastro)
+        entrada_cidade.pack()
+
+        tk.Label(janela_cadastro, text="Número da Conta:").pack()
+        entrada_numero = tk.Entry(janela_cadastro)
+        entrada_numero.pack()
+
+        tk.Label(janela_cadastro, text="Saldo Inicial:").pack()
+        entrada_saldo = tk.Entry(janela_cadastro)
+        entrada_saldo.pack()
+
+        tk.Label(janela_cadastro, text="Tipo da Conta").pack(pady=5)
+
+        entrada_tipo_conta = tk.StringVar(value="Bancária")
+
+        frame_corrente = tk.Frame(janela_cadastro)
+        frame_poupanca = tk.Frame(janela_cadastro)
+        frame_salario = tk.Frame(janela_cadastro)
+        frame_tipo = tk.Frame(janela_cadastro)
+        frame_tipo.pack(pady=10)
+        def mostrar_campos():
+            frame_corrente.pack_forget()
+            frame_poupanca.pack_forget()
+            frame_salario.pack_forget()
+           
+            if entrada_tipo_conta.get() == "Corrente":
+                frame_corrente.pack(pady=5)
+
+            elif entrada_tipo_conta.get() == "Poupança":
+                frame_poupanca.pack(pady=5)
+
+            elif entrada_tipo_conta.get() == "Salário":
+                frame_salario.pack(pady=5)
+
+        tk.Radiobutton(
+            frame_tipo,
+            text="Bancária",
+            variable=entrada_tipo_conta,
+            value="Bancária",
+            command=mostrar_campos
+        ).pack(side="left", padx=10)
+
+        tk.Radiobutton(
+            frame_tipo,
+            text="Corrente",
+            variable=entrada_tipo_conta,
+            value="Corrente",
+            command=mostrar_campos
+        ).pack(side="left", padx=10)
+
+        tk.Radiobutton(
+            frame_tipo,
+            text="Poupança",
+            variable=entrada_tipo_conta,
+            value="Poupança",
+            command=mostrar_campos
+        ).pack(side="left", padx=10)
+
+        tk.Radiobutton(
+            frame_tipo,
+            text="Salário",
+            variable=entrada_tipo_conta,
+            value="Salário",
+            command=mostrar_campos
+        ).pack(side="left", padx=10)
+
+        tk.Label(frame_corrente, text="Limite:").pack()
+        entrada_limite = tk.Entry(frame_corrente)
+        entrada_limite.pack()
+
+        tk.Label(frame_corrente, text="Tarifa Mensal:").pack()
+        entrada_tarifa = tk.Entry(frame_corrente)
+        entrada_tarifa.pack()
+
+        tk.Label(frame_poupanca, text="Taxa de Rendimento:").pack()
+        entrada_taxa = tk.Entry(frame_poupanca)
+        entrada_taxa.pack()
+
+        tk.Label(frame_salario, text="Empresa:").pack()
+        entrada_empresa = tk.Entry(frame_salario)
+        entrada_empresa.pack()
+
+        tk.Label(frame_salario, text="Limite de Saques:").pack()
+        entrada_limite_saques = tk.Entry(frame_salario)
+        entrada_limite_saques.pack()
+
+        tk.Label(frame_salario, text="Saques Realizados:").pack()
+        entrada_saques_realizados = tk.Entry(frame_salario)
+        entrada_saques_realizados.pack()
+
+        mostrar_campos()
+
+        def salvar_conta():
+            titular = entrada_titular.get()
+            cpf = entrada_cpf.get()
+            rua  = entrada_rua.get()
+            numerocasa = entrada_numero_casa.get()
+            bairro = entrada_bairro.get()
+            cidade = entrada_cidade.get()
+            saldo = entrada_saldo.get()
+            numero = entrada_numero.get()
+            tipo = entrada_tipo_conta.get()
+
+            if titular == "" or cpf == "" or numero == "" or saldo == "" or rua == "" or bairro == "" or cidade == "" or numerocasa == "" or tipo == "":
+                messagebox.showerror("Erro", "Preencha todos os campos.")
+                return
+
+            try:
+                numero = int(numero)
+                saldo = float(saldo)
+            except ValueError:
+                messagebox.showerror("Erro", "Número da conta e saldo devem ser valores numéricos.")
+                return
+
+            cliente = Cliente(titular, cpf, rua, numerocasa, bairro, cidade)
+
+            try:
+                if tipo == "Bancária":
+                    nova_conta = ContaBancaria(cliente, numero, saldo)
+
+                elif tipo == "Corrente":
+                    if entrada_limite.get() == "" or entrada_tarifa.get() == "":
+                        messagebox.showerror("Erro", "Preencha os campos Limite e Tarifa Mensal.")
+                        return
+                    limite = float(entrada_limite.get())
+                    tarifa_mensal = float(entrada_tarifa.get())
+                    nova_conta = ContaCorrente(cliente, numero, saldo, limite, tarifa_mensal)
+
+                elif tipo == "Poupança":
+                    if entrada_taxa.get() == "":
+                        messagebox.showerror("Erro", "Preencha a Taxa de Rendimento.")
+                        return
+                    taxa_rendimento = float(entrada_taxa.get())
+                    nova_conta = ContaPoupanca(cliente, numero, saldo, taxa_rendimento)
+
+                elif tipo == "Salário":
+                    if entrada_empresa.get() == "" or entrada_saques_realizados.get() == "" or entrada_limite_saques.get() == "":
+                        messagebox.showerror("Erro", "Preencha os campos Empresa, Saques Realizados e Limite de Saques.")
+                        return
+                    empresa = entrada_empresa.get()
+                    saques_realizados = int(entrada_saques_realizados.get())
+                    limite_saques = int(entrada_limite_saques.get())
+                    nova_conta = ContaSalario(cliente, numero, saldo, empresa, saques_realizados, limite_saques)
+
+            except ValueError:
+                messagebox.showerror("Erro", "Verifique os campos específicos do tipo de conta: devem ser numéricos.")
+                return
+
+            self.contas.append(nova_conta)
+
+            if nova_conta.existe_conta_duplicada():
+                messagebox.showerror("Erro", "Existe Conta Duplicada")
+                messagebox.showinfo("Contas", self.contas[0].contas_duplicadas())
+                exit()
 
             messagebox.showinfo("Sucesso", "Conta criada com sucesso.")
-
-            janela_cadastro.destroy()
             self.atualizar_tela()
+
+        
+
+        
 
         btn_salvar = tk.Button(
             janela_cadastro,
