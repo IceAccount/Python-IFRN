@@ -25,7 +25,6 @@ class BancoApp:
             messagebox.showinfo("Contas",self.contas[0].contas_duplicadas())
             exit()
         self.criar_interface()
-        # messagebox.showinfo("Sucesso", "Depósito realizado.")
 
     def criar_interface(self):
         titulo = tk.Label(
